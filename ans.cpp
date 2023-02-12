@@ -40,17 +40,18 @@ int query(int L, int R)
 
 ll binSearch(int L)
 {
-    int lo=L;
-    int hi=N;
-    while( hi > lo+1){
-        int mid=(lo+hi)/2;
-        if(query(lo,mid)<=K){
-            lo=mid;
-        }else {
-            hi=mid;
-        }
-    }
-    return lo;
+	int lo = L;
+	int hi = N;
+	while (hi > lo + 1) {
+		int mid = (lo + hi) / 2;
+		if (query(L, mid) <= K) {
+			lo = mid;
+		}
+		else {
+			hi = mid;
+		}
+	}
+	return lo;
 }
 
 
@@ -76,4 +77,3 @@ signed main()
     cout<<ans<<endl;
     return 0;
 }
-
