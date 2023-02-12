@@ -28,25 +28,28 @@ void buildSparseTable()
 	}
 }
 
-int query(int l,int r)
+int query(int L, int R)
 {
-    int len=(r-l+1);
-    //int k=log2(len);
-    int p=log2(len);
-    int mnValue=min(minTable[l][p],minTable[r+1-(1<<p)][p]);
-    int mxValue=max(maxTable[l][p],maxTable[r+1-(1<<p)][p]);
-    return mxValue-mnValue;
+	int p = log2(R - L + 1);
+	int maxValue = max(maxTable[L][p], maxTable[R + 1 - (1 << p)][p]);
+	int minValue = min(minTable[L][p], minTable[R + 1 - (1 << p)][p]);
+	return maxValue - minValue;
 }
 
-ll binSearch(int l,int r,int k)
+ll binSearch(int L)
 {
-    int mid,ret;
-    while(r>(l+1)){
-        mid=(l+r)/2;
-        ret=query(l,mid);
-        (ret<=k)? l=mid : r=mid;
-    }
-    return l;
+	int lo = L;
+	int hi = N;
+	while (hi > lo + 1) {
+		int mid = (lo + hi) >> 1;
+		if (query(L, mid) <= K) {
+			lo = mid;
+		}
+		else {
+			hi = mid;
+		}
+	}
+	return lo;
 }
 
 
@@ -65,7 +68,7 @@ signed main()
 
     ll ans=0;
     for(int i=0;i<N;i++){
-        ll ret=binSearch(i,N,K);
+        ll ret=binSearch(i);
         ans+=(ret-i+1);
     }
 
